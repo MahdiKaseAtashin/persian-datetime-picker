@@ -11,8 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.3
-  persian_datetime_picker:
-    path : ../
  
 dev_dependencies:
   flutter_test:

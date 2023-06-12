@@ -1,6 +1,6 @@
+import 'p_date_picker/persian_datetime_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 final ThemeData androidTheme = new ThemeData(
   fontFamily: 'Dana',
@@ -72,37 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: Column(
                     children: [
-                      imageButton(
-                        onTap: () async {
-                          Jalali? picked = await showPersianDatePicker(
-                              context: context,
-                              initialDate: Jalali.now(),
-                              firstDate: Jalali(1385, 8),
-                              lastDate: Jalali(1450, 9),
-                              initialEntryMode:
-                                  PDatePickerEntryMode.calendarOnly,
-                              initialDatePickerMode: PDatePickerMode.year,
-                              builder: (context, child) {
-                                return Theme(
-                                  data: ThemeData(
-                                    dialogTheme: const DialogTheme(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(0)),
-                                      ),
-                                    ),
-                                  ),
-                                  child: child!,
-                                );
-                              });
-                          if (picked != null && picked != selectedDate) {
-                            setState(() {
-                              label = picked.toJalaliDateTime();
-                            });
-                          }
-                        },
-                        image: '08',
-                      ),
                       imageButton(
                         onTap: () async {
                           Jalali? pickedDate =
@@ -177,30 +146,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       imageButton(
                         onTap: () async {
-                          var picked = await showPersianTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now(),
-                            initialEntryMode: PTimePickerEntryMode.input,
-                            builder: (BuildContext context, Widget? child) {
-                              return Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: MediaQuery(
-                                  data: MediaQuery.of(context)
-                                      .copyWith(alwaysUse24HourFormat: true),
-                                  child: child!,
-                                ),
-                              );
-                            },
-                          );
-                          setState(() {
-                            if (picked != null)
-                              label = picked.persianFormat(context);
-                          });
-                        },
-                        image: '09',
-                      ),
-                      imageButton(
-                        onTap: () async {
                           Jalali? pickedDate =
                               await showModalBottomSheet<Jalali>(
                             context: context,
@@ -272,68 +217,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           }
                         },
                         image: '05',
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      imageButton(
-                        onTap: () async {
-                          var picked = await showPersianDateRangePicker(
-                            context: context,
-                            initialDateRange: JalaliRange(
-                              start: Jalali(1400, 1, 2),
-                              end: Jalali(1400, 1, 10),
-                            ),
-                            firstDate: Jalali(1385, 8),
-                            lastDate: Jalali(1450, 9),
-                          );
-                          setState(() {
-                            label =
-                                "${picked?.start?.toJalaliDateTime() ?? ""} ${picked?.end?.toJalaliDateTime() ?? ""}";
-                          });
-                        },
-                        image: '03',
-                      ),
-                      imageButton(
-                        onTap: () async {
-                          var picked = await showPersianTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now(),
-                            builder: (BuildContext context, Widget? child) {
-                              return Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: child!,
-                              );
-                            },
-                          );
-                          setState(() {
-                            if (picked != null)
-                              label = picked.persianFormat(context);
-                          });
-                        },
-                        image: '04',
-                      ),
-                      imageButton(
-                        onTap: () async {
-                          var picked = await showPersianDateRangePicker(
-                            context: context,
-                            initialEntryMode: PDatePickerEntryMode.input,
-                            initialDateRange: JalaliRange(
-                              start: Jalali(1400, 1, 2),
-                              end: Jalali(1400, 1, 10),
-                            ),
-                            firstDate: Jalali(1385, 8),
-                            lastDate: Jalali(1450, 9),
-                          );
-                          setState(() {
-                            label =
-                                "${picked?.start?.toJalaliDateTime() ?? ""} ${picked?.end?.toJalaliDateTime() ?? ""}";
-                          });
-                        },
-                        image: '06',
                       ),
                     ],
                   ),
@@ -438,7 +321,7 @@ class _ScaleGestureState extends State<ScaleGesture> {
         setState(() {
           scale = 1;
         });
-        widget?.onTap();
+        widget.onTap();
       },
       child: Transform.scale(
         scale: scale,
